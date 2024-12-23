@@ -1,10 +1,13 @@
-motor
+motor[srv]
 pytz
-pyrogram
+pyrofork==2.3.28
 tgcrypto
 aiofiles
 python-dateutil
 schedule
 requests
 Pyromod==1.5
-python-dotenv
+youtube-search-python
+youtube-search
+yt-dlp
+wget
