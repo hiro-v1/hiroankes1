@@ -9,7 +9,7 @@ BOT_WORKERS = int(os.environ.get("BOT_WORKERS", "4"))
 APP_ID = int(os.environ.get("APP_ID", "25802693"))
 API_HASH = os.environ.get("API_HASH", "803393e9f1b6ea523853ce2126208c17")
 
-LOG_CHANNEL_ID = int(os.environ.get("LOG_CHANNEL_ID", ""))
+LOG_CHANNEL_ID = int(os.environ.get("LOG_CHANNEL_ID", "-1002280387377"))
 
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI", "mongodb+srv://kensay:Kentos123$@cluster0.gm457.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 DB_NAME = os.environ.get("DB_NAME", "ankeshiro")
