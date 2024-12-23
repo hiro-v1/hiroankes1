@@ -9,15 +9,16 @@ from antigcast.helpers.database import *
 class Bot(Client):
     def __init__(self):
         super().__init__(
-            "Bot",
+            "bot_session",
             api_hash=API_HASH,
             api_id=APP_ID,
             plugins={"root": "antigcast/modules"},
             workers=4,
             bot_token=BOT_TOKEN,
+            in_memory=False,
         )
         self.LOGGER = LOGGER
-
+        
     async def start(self):
         try:
             await super().start()
