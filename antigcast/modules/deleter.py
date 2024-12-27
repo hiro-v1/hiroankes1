@@ -54,6 +54,20 @@ async def deldblmessag(app : Bot, message : Message):
     await xxnx.delete()
     await message.delete()
 
+@Bot.on_message(filters.command("listbl") & ~filters.private & Admin)
+async def daftar_blacklist(app: Bot, message: Message):
+    try:
+        chat_id = message.chat.id
+        bl_words = await get_bl_words(chat_id)
+        if not bl_words:
+            await message.reply("Tidak ada kata-kata yang di-blacklist.")
+            return
+
+        bl_list = "\n".join([f"{idx + 1}. {word}" for idx, word in enumerate(bl_words)])
+        response_text = f"<blockquote>**Daftar kata-kata yang di-blacklist di grup ini ({len(bl_words)} kata):**\n{bl_list}</blockquote>"
+        await message.reply(response_text)
+    except Exception as e:
+        await message.reply(f"Error: `{e}`")
 
 @Bot.on_message(filters.text & ~filters.group)
 async def deletermessag(app: Bot, message: Message):
