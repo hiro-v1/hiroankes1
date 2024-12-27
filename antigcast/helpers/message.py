@@ -10,7 +10,7 @@ async def isGcast(filter, client, update):
     
     try:    
     with open('bl.txt', 'r') as file:
-        blc = [w.lower().strip() for w in file.readlines()]
+        blc = [line.lower().strip() for line in file.readlines()]
         for chara in bl:
             blc.append(chara)
 
@@ -30,3 +30,5 @@ async def isGcast(filter, client, update):
     return False
 
 Gcast = filters.create(isGcast)
+
+
