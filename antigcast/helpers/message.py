@@ -7,7 +7,8 @@ async def isGcast(filter, client, update):
     awoos = update.text
     x = awoos.lower()
     xx = await get_bl_words()
-        
+    
+    try:    
     with open('bl.txt', 'r') as file:
         blc = [w.lower().strip() for w in file.readlines()]
         for chara in bl:
@@ -21,10 +22,10 @@ async def isGcast(filter, client, update):
         return True
     
     kont = update.from_user.id
-    #meki = await get_muted_users()
+    meki = await get_muted_users()
 
-    #if kont in meki:
-    #    return True
+    if kont in meki:
+        return True
         
     return False
 
