@@ -100,7 +100,7 @@ async def cek_blacklist(app: Bot, message: Message):
     text = message.text.lower() if message.text else ""
     
     # Dapatkan daftar kata yang di-blacklist untuk grup ini
-    bl_words = await get_bl_words()
+    bl_words = await isGcast(filters, app, message)
     if not bl_words:
         return
     
