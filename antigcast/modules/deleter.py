@@ -12,8 +12,20 @@ from antigcast.helpers.message import *
 from antigcast.helpers.database import *
 
 
+async def get_blacklist_words():
+    # Read prohibited words from bl.txt file
+    with open("antigcast/modules/bl.txt", "r") as file:
+        file_words = [line.strip().lower() for line in file.readlines()]
+    
+    # Get prohibited words from database
+    db_words = await get_bl_words()
+    
+    # Combine both lists
+    return set(file_words + db_words)
+
+
 @Bot.on_message(filters.command("addbl") & ~filters.private & Admin)
-async def addblmessag(app : Bot, message : Message):
+async def addblmessag(app: Bot, message: Message):
     trigger = get_arg(message)
     if message.reply_to_message:
         trigger = message.reply_to_message.text or message.reply_to_message.caption
@@ -33,8 +45,9 @@ async def addblmessag(app : Bot, message : Message):
     await xxnx.delete()
     await message.delete()
 
+
 @Bot.on_message(filters.command("delbl") & ~filters.private & Admin)
-async def deldblmessag(app : Bot, message : Message):
+async def deldblmessag(app: Bot, message: Message):
     trigger = get_arg(message)
     if message.reply_to_message:
         trigger = message.reply_to_message.text or message.reply_to_message.caption
@@ -54,6 +67,7 @@ async def deldblmessag(app : Bot, message : Message):
     await xxnx.delete()
     await message.delete()
 
+
 @Bot.on_message(filters.command("listbl") & ~filters.private & Admin)
 async def daftar_blacklist(app: Bot, message: Message):
     try:
@@ -68,6 +82,7 @@ async def daftar_blacklist(app: Bot, message: Message):
         await message.reply(response_text)
     except Exception as e:
         await message.reply(f"Error: `{e}`")
+
 
 @Bot.on_message(filters.text & ~filters.group)
 async def deletermessag(app: Bot, message: Message):
@@ -94,17 +109,18 @@ async def deletermessag(app: Bot, message: Message):
     except MessageDeleteForbidden:
         pass
 
+
 @Bot.on_message(filters.text & ~filters.private)
 async def cek_blacklist(app: Bot, message: Message):
     chat_id = message.chat.id
     text = message.text.lower() if message.text else ""
     
-    # Dapatkan daftar kata yang di-blacklist untuk grup ini
-    bl_words = await isGcast(filters, app, message)
+    # Get the combined list of blacklisted words
+    bl_words = await get_blacklist_words()
     if not bl_words:
         return
     
-    # Periksa apakah pesan mengandung kata yang di-blacklist
+    # Check if the message contains any blacklisted words
     for word in bl_words:
         if word in text:
             try:
